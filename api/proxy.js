@@ -1,8 +1,33 @@
-// api/proxy.js
-const axios = require("axios"); // Ensure to install axios
+const axios = require("axios");
+const cors = require("cors"); // Import the cors module
 
 export default async (req, res) => {
   const targetUrl = "https://54.253.2.130" + req.url; // Forward request path to the target URL
+
+  // CORS options to allow specific origins
+  const allowedOrigins = [
+    "http://localhost:4200", // Allow localhost
+    "https://spotify-ui-gules.vercel.app", // Allow Vercel URL
+  ];
+
+  // Set CORS headers manually or use the `cors` module
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+  }
+
+  // Handle preflight requests (OPTIONS method)
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
   try {
     // Forward the request using axios
