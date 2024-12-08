@@ -2,7 +2,7 @@ const axios = require("axios");
 const cors = require("cors"); // Import the cors module
 
 export default async (req, res) => {
-  const targetUrl = "https://54.253.2.130" + req.url; // Forward request path to the target URL
+  const targetUrl = "13.211.92.181" + req.url; // Forward request path to the target URL
 
   // Log the incoming request URL and method
   console.log(`Incoming request: ${req.method} ${req.url}`);
